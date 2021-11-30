@@ -1,0 +1,22 @@
+{
+    "users": [{
+        "username": "adipeled",
+        "email": "adipeled224@gmail.com",
+        "password": "123adi",
+        "favorites": [
+            1,
+            202,
+            710
+        ]
+    },
+    {
+        "username": "noyshabo",
+        "email": "noysh1234o@gmail.com",
+        "password": "password",
+        "favorites": [
+            0,
+            1
+        ]
+    }
+    ]
+}
