@@ -1,6 +1,6 @@
 const express = require("express");
-const { recipesRouter } = require("./routers/recipeRouter");
-const { usersRouter } = require("./routers/userRouter");
+const { recipesRouter } = require("./routers/recipesRouter");
+const { usersRouter } = require("./routers/usersRouter");
 
 
 const app = express();
@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // check pass?
-app.use(checkpass);
+// app.use(checkpass);
 app.use('/api/recipes', recipesRouter);
 app.use('/api/users',usersRouter);
 
