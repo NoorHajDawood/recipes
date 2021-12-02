@@ -4,7 +4,6 @@ exports.usersController = {
     async getUser(req, res) {
         let docs;
         const userIdParam = req.params.userId;
-        // todo: לחלץ ID
         try {
             docs = await User.findOne({ _id: userIdParam});
 

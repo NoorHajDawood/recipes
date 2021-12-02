@@ -4,7 +4,6 @@ exports.recipesController = {
     async getRecipe(req, res) {
         let docs;
         const recipeIdParam = req.params.recipeId;
-        // todo: לבדוק איך להכניס את האיידי לתוך אובייקט של איידיי- אם צריך בכלל
         try {
             docs = await Recipe.findOne({ _id: recipeIdParam});
             if(docs){
@@ -28,8 +27,9 @@ exports.recipesController = {
             return;
         }
 
-        if (docs[0])
+        if (docs[0]){
             res.status(200).json(docs);
+        }
         else
             res.status(200).json({ message: "There are not any recipes" });
 
@@ -66,7 +66,7 @@ exports.recipesController = {
     async deleteRecipe(req, res) {
         let docs;
         try {
-            docs = await Recipe.deleteOne({ _id: req.params.recipeId }, );
+            docs = await Recipe.deleteOne({ _id: req.params.recipeId } );
         } catch (err) {
             res.status(500).json({ error: `Error deleting recipe ${req.params.recipeId} : ${err}` });
             return;
