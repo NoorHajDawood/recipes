@@ -8,11 +8,10 @@ const recipeSchema = new Schema({
     serving: { type: Number, required: true },
     memberId: { type: String },
     ingredients: [{
-          "name": {type: String , required: true},
-          "quantity":{type: Number , required: true},
-          "unit": {type: String, required: true }
-        }]  , 
-    memberId: { type: Number, required: true },
+        "name": { type: String, required: true },
+        "quantity": { type: Number, required: true },
+        "unit": { type: String, required: true }
+    }],
     serving: { type: Number, required: true },
     instructions: [String],
     likes: { type: Number },
