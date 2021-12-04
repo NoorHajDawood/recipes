@@ -45,6 +45,7 @@ exports.usersController = {
             if (docs) {
                 docs = docs.toJSON();
                 const recipes = await recipesAndFavorites(docs.myRecipes, docs.favorites);
+                delete docs.password;
                 docs.myRecipes = recipes.myRecipes;
                 docs.favorites = recipes.favorites;
                 res.status(200).json(docs);
@@ -72,6 +73,7 @@ exports.usersController = {
         for (let user of docs) {
             user = user.toJSON();
             recipes = await recipesAndFavorites(user.myRecipes, user.favorites);
+            delete user.password;
             user.myRecipes = recipes.myRecipes;
             user.favorites = recipes.favorites;
             result.push(user);
