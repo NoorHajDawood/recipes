@@ -1,0 +1,98 @@
+.edit-comp {
+    @include for-normal-layout {
+        display: inline-grid;
+    }
+    @include for-wide-layout {
+        display: inline-grid;
+    }
+    --color-background: var(--color-light);
+    --color-text: var(--color-dark);
+    --color-accent: var(--color-signal);
+    --size-bezel: .5rem; // maybe should change to 7px
+    --size-radius: 8px;
+    text-align: left;
+    .widthInputs {
+        * {
+            margin-bottom: 20px;
+        }
+    }
+    form {
+        padding: 20px;
+    }
+    .input {
+        width: 100%;
+        margin-bottom: 10px;
+        position: relative;
+        &__label {
+            position: absolute;
+            left: 0;
+            top: 0;
+            padding: calc(var(--size-bezel) * 0.75) calc(var(--size-bezel) * .5);
+            margin: calc(var(--size-bezel) * 0.75 + 3px) calc(var(--size-bezel) * .5);
+            background: white;
+            white-space: nowrap;
+            transform: translate(0, 0);
+            transform-origin: 0 0;
+            background: var(--color-background);
+            transition: transform 120ms ease-in;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+        &__field {
+            width: 90%;
+            box-sizing: border-box;
+            display: block;
+            border: 3px solid currentColor;
+            padding: calc(var(--size-bezel) * 1.5) var(--size-bezel);
+            color: currentColor;
+            background: #ffffff8f;
+            border-radius: var(--size-radius);
+            &:focus,
+            &:not(:placeholder-shown) {
+                &+.input__label {
+                    transform: translate(.25rem, -65%) scale(.8);
+                    color: var(--color-accent);
+                    background-color: $clrC;
+                }
+            }
+        }
+    }
+    .pickers {
+        display: flex;
+        justify-content: space-between;
+        h3 {
+            margin-inline-end: 10px;
+            margin-inline-start: 20px;
+        }
+    }
+    .ingredient {
+        .select-unit {
+            margin-bottom: 15px;
+        }
+        margin-bottom: 20px;
+        ;
+    }
+    h2 {
+        margin-top: 20px;
+    }
+    .radios-h2-container {
+        display: flex;
+    }
+    .containerQuant {
+        display: flex;
+        margin-bottom: 60px;
+    }
+    .addButton::before {
+        content: '\f055';
+        font-family: symbol2;
+        font-size: 40px;
+        color: $clr2;
+    }
+    .button-h3 {
+        display: flex;
+        align-items: center;
+        h3 {
+            margin-inline-start: 10px;
+        }
+    }
+}

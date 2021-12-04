@@ -1,0 +1,15 @@
+.loading {
+    background-image: url('~@/assets/imgs/food.gif');
+    background-size: cover;
+    width: 300px;
+    height: 200px;
+    position: fixed;
+    left: 50%;
+    transform: translateX( -50%);
+    margin: 100px auto;
+}
+
+.containe-loader {
+    width: 300px;
+    height: 200px;
+}

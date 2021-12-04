@@ -1,0 +1,35 @@
+.app-header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+    background-color: $clrC;
+    box-shadow: 0px 2px 4px 0px #a5a5a5;
+    height: 80px;
+    a,
+    a:active,
+    a:visited,
+    a:focus,
+    a:hover,
+    a:active {
+        text-decoration: none;
+        color: $clr2;
+    }
+    h1 {
+        font-size: rem(40px);
+        margin-bottom: 0;
+        margin-top: 15px;
+        font-weight: 900;
+        width: 100%;
+    }
+    img {
+        height: 70px;
+        width: 70px;
+        margin: 0 auto;
+        position: absolute;
+        // transform: ;
+        margin-left: -90px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-25deg);
+    }
+}
