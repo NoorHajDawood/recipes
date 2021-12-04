@@ -28,11 +28,11 @@ exports.recipesController = {
             return;
         }
 
-        if (docs[0]) {
+        if (docs) {
             res.status(200).json(docs);
         }
         else
-            res.status(200).json({ message: "There are not any recipes" });
+            res.status(500).json({ error: `Couldn't retrieve recipes` });
 
     },
     async addRecipe(req, res) {
