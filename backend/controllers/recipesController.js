@@ -1,19 +1,20 @@
 const Recipe = require('../models/recipe')
+const { isAuthorized } = require('../controllers/sessionsController')
 
 exports.recipesController = {
     async getRecipe(req, res) {
         let docs;
         const recipeIdParam = req.params.recipeId;
         try {
-            docs = await Recipe.findOne({ _id: recipeIdParam});
-            if(docs){
-                res.status(200).json({docs});
+            docs = await Recipe.findOne({ _id: recipeIdParam });
+            if (docs) {
+                res.status(200).json({ docs });
             }
-            else{
+            else {
                 res.status(404).json({ error: `Recipe with id : ${recipeIdParam} not found` });
             }
         } catch (err) {
-            res.status(500).send({ error: `Error get recipe: ${recipeIdParam} : ${err}` });
+            res.status(500).json({ error: `Error get recipe: ${recipeIdParam} : ${err}` });
             return;
         }
 
@@ -27,7 +28,7 @@ exports.recipesController = {
             return;
         }
 
-        if (docs[0]){
+        if (docs[0]) {
             res.status(200).json(docs);
         }
         else
@@ -35,6 +36,10 @@ exports.recipesController = {
 
     },
     async addRecipe(req, res) {
+        if (!isAuthorized(req)) {
+            res.status(401).json({ error: 'Unauthorized to add a recipe' });
+            return;
+        }
         const newRecipe = new Recipe(req.body);
         let docs;
         try {
@@ -43,14 +48,17 @@ exports.recipesController = {
             res.status(400).json({ error: ` ${err}` });
             return;
         }
-        res.status(200).json({ message: "The recipe added" });
+        res.status(200).json(docs);
 
     },
     async updateRecipe(req, res) {
-
+        if (!isAuthorized(req)) {
+            res.status(401).json({ error: 'Unauthorized to update this recipe' });
+            return;
+        }
         let docs;
         try {
-            docs = await Recipe.updateOne({ _id: req.params.recipeId }, req.body );
+            docs = await Recipe.updateOne({ _id: req.params.recipeId }, req.body);
         } catch (err) {
             res.status(500).json({ error: `Error update recipe ${req.params.recipeId} : ${err}` });
             return;
@@ -64,9 +72,13 @@ exports.recipesController = {
 
     },
     async deleteRecipe(req, res) {
+        if (!isAuthorized(req)) {
+            res.status(401).json({ error: 'Unauthorized to delete this recipe' });
+            return;
+        }
         let docs;
         try {
-            docs = await Recipe.deleteOne({ _id: req.params.recipeId } );
+            docs = await Recipe.deleteOne({ _id: req.params.recipeId });
         } catch (err) {
             res.status(500).json({ error: `Error deleting recipe ${req.params.recipeId} : ${err}` });
             return;

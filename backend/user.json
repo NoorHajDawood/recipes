@@ -1,22 +1,62 @@
 {
-    "users": [{
-        "username": "adipeled",
-        "email": "adipeled224@gmail.com",
-        "password": "123adi",
-        "favorites": [
-            1,
-            202,
-            710
-        ]
-    },
-    {
-        "username": "noyshabo",
-        "email": "noysh1234o@gmail.com",
-        "password": "password",
-        "favorites": [
-            0,
-            1
-        ]
-    }
+    "users": [
+        {
+            "username": "adipeled",
+            "email": "adipeled224@gmail.com",
+            "password": "adi123",
+            "userImg": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e65e21bd-dc77-499e-962a-fa13cab37fc2/d97nx5s-214ea11e-38d9-4b47-b16d-3e097e0b5701.jpg/v1/fill/w_1024,h_1024,q_75,strp/wish_by_kuvshinov_ilya_d97nx5s-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTAyNCIsInBhdGgiOiJcL2ZcL2U2NWUyMWJkLWRjNzctNDk5ZS05NjJhLWZhMTNjYWIzN2ZjMlwvZDk3bng1cy0yMTRlYTExZS0zOGQ5LTRiNDctYjE2ZC0zZTA5N2UwYjU3MDEuanBnIiwid2lkdGgiOiI8PTEwMjQifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.brUCVdMwHxTRHA7aroBxahnkj8WBrORxiBCn_MtDNH8",
+            "desc": "I love to cook and I live in Tel Aviv I'm a developer",
+            "from": "Israel",
+            "myRecipes": [
+                "f101",
+                "f102"
+            ],
+            "favorites": [
+                "f101"
+            ],
+            "session": {}
+        },
+        {
+            "username": "noyshabo",
+            "email": "noysh1234o@gmail.com",
+            "password": "noy123",
+            "userImg": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e65e21bd-dc77-499e-962a-fa13cab37fc2/d97nx5s-214ea11e-38d9-4b47-b16d-3e097e0b5701.jpg/v1/fill/w_1024,h_1024,q_75,strp/wish_by_kuvshinov_ilya_d97nx5s-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTAyNCIsInBhdGgiOiJcL2ZcL2U2NWUyMWJkLWRjNzctNDk5ZS05NjJhLWZhMTNjYWIzN2ZjMlwvZDk3bng1cy0yMTRlYTExZS0zOGQ5LTRiNDctYjE2ZC0zZTA5N2UwYjU3MDEuanBnIiwid2lkdGgiOiI8PTEwMjQifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.brUCVdMwHxTRHA7aroBxahnkj8WBrORxiBCn_MtDNH8",
+            "desc": "I love to cook and I live in Tel Aviv I'm a developer",
+            "from": "Israel",
+            "myRecipes": [
+                "f101",
+                "f102"
+            ],
+            "favorites": [
+                {
+                    "$numberInt": "0"
+                },
+                {
+                    "$numberInt": "1"
+                }
+            ],
+            "session": {}
+        },
+        {
+            "username": "noorhajdawood",
+            "email": "noorhajdawood@gmail.com",
+            "password": "noor123",
+            "userImg": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e65e21bd-dc77-499e-962a-fa13cab37fc2/d97nx5s-214ea11e-38d9-4b47-b16d-3e097e0b5701.jpg/v1/fill/w_1024,h_1024,q_75,strp/wish_by_kuvshinov_ilya_d97nx5s-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTAyNCIsInBhdGgiOiJcL2ZcL2U2NWUyMWJkLWRjNzctNDk5ZS05NjJhLWZhMTNjYWIzN2ZjMlwvZDk3bng1cy0yMTRlYTExZS0zOGQ5LTRiNDctYjE2ZC0zZTA5N2UwYjU3MDEuanBnIiwid2lkdGgiOiI8PTEwMjQifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.brUCVdMwHxTRHA7aroBxahnkj8WBrORxiBCn_MtDNH8",
+            "desc": "I love to cook and I live in Tel Aviv I'm a developer",
+            "from": "Israel",
+            "myRecipes": [
+                "f101",
+                "f102"
+            ],
+            "favorites": [
+                {
+                    "$numberInt": "0"
+                },
+                {
+                    "$numberInt": "3"
+                }
+            ],
+            "session": {}
+        }
     ]
 }
