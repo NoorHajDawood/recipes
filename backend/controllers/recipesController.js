@@ -40,6 +40,7 @@ exports.recipesController = {
             res.status(401).json({ error: 'Unauthorized to add a recipe' });
             return;
         }
+        req.body.memberId = req.session.userId;
         const newRecipe = new Recipe(req.body);
         let docs;
         try {
