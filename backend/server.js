@@ -30,6 +30,9 @@ app.use(session({
     resave: false
 }));
 
+app.use((req, res, next) => {
+    console.log(`${req.method}: ${req.url}`);
+})
 
 app.use(express.static('public'));
 
