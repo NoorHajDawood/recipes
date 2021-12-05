@@ -2,10 +2,6 @@ const User = require('../models/user');
 
 exports.sessionsController = {
     async login(req, res) {
-        if(req.session.userId) {
-            res.json({ message: 'Login successful' });
-            return;
-        }
         let docs;
         const userIdParam = req.params.userId;
         const { email, password } = req.body;
@@ -33,7 +29,7 @@ exports.sessionsController = {
 
             try {
                 await User.updateOne({ _id: docs.id }, { session: docs.session });
-                res.json({ message: 'Login successful' });
+                res.redirect(`/api/users/${docs.id}`)
             } catch (err) {
                 res.status(500).json({ error: `Error updating session for User ${req.params.userId} : ${err}` });
                 return;
