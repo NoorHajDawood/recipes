@@ -12,7 +12,6 @@ const recipeSchema = new Schema({
         "quantity": { type: Number, required: true },
         "unit": { type: String, required: true }
     }],
-    serving: { type: Number, required: true },
     instructions: [String],
     likes: { type: Number },
 }, { collection: 'recipes' });
