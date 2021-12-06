@@ -1,5 +1,4 @@
 const Recipe = require('../models/recipe')
-const { isAuthorized } = require('../controllers/sessionsController')
 
 exports.recipesController = {
     async getRecipe(req, res) {
@@ -9,8 +8,7 @@ exports.recipesController = {
             docs = await Recipe.findOne({ _id: recipeIdParam });
             if (docs) {
                 res.status(200).json(docs);
-            }
-            else {
+            } else {
                 res.status(404).json({ error: `Recipe with id : ${recipeIdParam} not found` });
             }
         } catch (err) {
@@ -30,22 +28,21 @@ exports.recipesController = {
 
         if (docs) {
             res.status(200).json(docs);
-        }
-        else
+        } else
             res.status(500).json({ error: `Couldn't retrieve recipes` });
 
     },
     async addRecipe(req, res) {
-        if (!isAuthorized(req)) {
-            res.status(401).json({ error: 'Unauthorized to add a recipe' });
-            return;
-        }
-        req.body.memberId = req.session.userId;
+        // if (!req.session || !req.session.userId) {
+        //     res.status(401).json({ error: 'Unauthorized to add a recipe' });
+        //     return;
+        // }
         const newRecipe = new Recipe(req.body);
         let docs;
         try {
             docs = await newRecipe.save();
         } catch (err) {
+            console.log(` ${err}`);
             res.status(400).json({ error: ` ${err}` });
             return;
         }
@@ -53,30 +50,36 @@ exports.recipesController = {
 
     },
     async updateRecipe(req, res) {
-        if (!isAuthorized(req)) {
-            res.status(401).json({ error: 'Unauthorized to update this recipe' });
-            return;
-        }
-        let docs;
+        // if (!req.session || !req.session.userId) {
+        //     res.status(401).json({ error: 'Unauthorized to update this recipe' });
+        //     return;
+        // }
+        let recipe;
         try {
-            docs = await Recipe.updateOne({ _id: req.params.recipeId }, req.body);
+            recipe = await Recipe.updateOne({ _id: req.params.recipeId }, req.body);
         } catch (err) {
             res.status(500).json({ error: `Error update recipe ${req.params.recipeId} : ${err}` });
             return;
         }
 
-        if (docs.matchedCount == 1) {
-            res.status(200).json({ message: "The recipe updated" });
+        if (recipe.matchedCount == 1) {
+            // res.status(200).json({ message: "The recipe updated" });
+            try {
+                recipe = await Recipe.findOne({ _id: req.params.recipeId });
+            } catch (err) {
+                res.status(500).json({ error: `Error getting recipe ${req.params.recipeId} : ${err}` });
+                return;
+            }
+            res.json(recipe);
         } else {
             res.status(404).json({ error: "Recipe id not found" });
         }
-
     },
     async deleteRecipe(req, res) {
-        if (!isAuthorized(req)) {
-            res.status(401).json({ error: 'Unauthorized to delete this recipe' });
-            return;
-        }
+        // if (!req.session || !req.session.userId) {
+        //     res.status(401).json({ error: 'Unauthorized to delete this recipe' });
+        //     return;
+        // }
         let docs;
         try {
             docs = await Recipe.deleteOne({ _id: req.params.recipeId });

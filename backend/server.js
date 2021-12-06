@@ -1,6 +1,7 @@
 const express = require("express");
 const session = require('express-session');
 const cors = require('cors');
+const path = require('path');
 const { sessionsRouter } = require("./routers/sessionsRouter");
 const { recipesRouter } = require("./routers/recipesRouter");
 const { usersRouter } = require("./routers/usersRouter");
@@ -37,7 +38,7 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use(express.static('public'));
+app.use(express.static(path.resolve(__dirname, 'public')))
 
 app.use('/api/sessions', sessionsRouter);
 app.use('/api/recipes', recipesRouter);

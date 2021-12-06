@@ -19,8 +19,7 @@ exports.sessionsController = {
                 user.session = req.session;
                 user.session.sessionID = req.sessionID;
                 user.session.userId = user.id;
-            }
-            else {
+            } else {
                 res.status(403).json({ error: 'Invalid password' });
                 return;
             }
@@ -32,9 +31,8 @@ exports.sessionsController = {
                 res.status(500).json({ error: `Error updating session for User ${user.id} : ${err}` });
                 return;
             }
-        }
-        else {
-            res.status(404).json({ error: `User with email : ${email} not found` });
+        } else {
+            res.status(404).json({ error: `Invalid email` });
         }
     },
     async logout(req, res) {

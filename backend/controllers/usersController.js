@@ -1,8 +1,7 @@
 const User = require('../models/user');
-const Recipe = require('../models/recipe')
-const { isAuthorized } = require('../controllers/sessionsController')
+const Recipe = require('../models/recipe');
 
-async function recipesAndFavorites(myRecipes, favorites) {
+async function recipesAndFavoritesStringToObject(myRecipes, favorites) {
     let result = {};
     let recipes;
     let favs;
@@ -36,13 +35,27 @@ async function recipesAndFavorites(myRecipes, favorites) {
     return result;
 }
 
-async function updateUserRecipes(user) {
+async function updateReturnedUser(user) {
     user = user.toJSON();
-    const recipes = await recipesAndFavorites(user.myRecipes, user.favorites);
+    const recipes = await recipesAndFavoritesStringToObject(user.myRecipes, user.favorites);
     delete user.password;
     user.myRecipes = recipes.myRecipes;
     user.favorites = recipes.favorites;
     return user;
+}
+
+async function recipesAndFavoritesObjectToString(myRecipes, favorites) {
+    let result = {};
+
+    result.myRecipes = myRecipes.map(recipe => {
+        return recipe._id;
+    });
+
+    result.favorites = favorites.map(recipe => {
+        return recipe._id;
+    });
+
+    return result;
 }
 
 exports.usersController = {
@@ -52,10 +65,9 @@ exports.usersController = {
         try {
             user = await User.findOne({ _id: userIdParam });
             if (user) {
-                user = await updateUserRecipes(user);
+                user = await updateReturnedUser(user);
                 res.status(200).json(user);
-            }
-            else {
+            } else {
                 res.status(404).json({ error: `User with id : ${userIdParam} not found` });
             }
         } catch (err) {
@@ -76,7 +88,7 @@ exports.usersController = {
         let recipes;
         result = [];
         for (let user of users) {
-            user = await updateUserRecipes(user);
+            user = await updateReturnedUser(user);
             result.push(user);
         }
         res.status(200).json(result);
@@ -86,22 +98,26 @@ exports.usersController = {
         let user;
         try {
             user = await newUser.save();
+            user = await updateReturnedUser(user);
+            res.status(200).json(user);
         } catch (err) {
             res.status(400).json({ error: ` ${err}` });
             return;
         }
-        user = await updateUserRecipes(user);
-        res.status(200).json(user);
 
     },
     async updateUser(req, res) {
-        if (!isAuthorized(req) || req.session.userId != req.params.userId) {
-            res.status(401).json({ error: 'Unauthorized to update this user' });
-            return;
-        }
+        // if (!req.session || !req.session.userId || req.session.userId != req.params.userId) {
+        //     res.status(401).json({ error: 'Unauthorized to update this user' });
+        //     return;
+        // }
         let updateResult;
+        const user = req.body;
+        const recipes = await recipesAndFavoritesObjectToString(user.myRecipes, user.favorites);
+        user.myRecipes = recipes.myRecipes;
+        user.favorites = recipes.favorites;
         try {
-            updateResult = await User.updateOne({ _id: req.params.userId }, req.body);
+            updateResult = await User.updateOne({ _id: req.params.userId }, user);
         } catch (err) {
             res.status(500).json({ error: `Error update User ${req.params.userId} : ${err}` });
             return;
@@ -114,10 +130,10 @@ exports.usersController = {
         }
     },
     async deleteUser(req, res) {
-        if (!isAuthorized(req) || req.session.userId != req.params.userId) {
-            res.status(401).json({ error: 'Unauthorized to delete this user' });
-            return;
-        }
+        // if (!req.session || !req.session.userId || req.session.userId != req.params.userId) {
+        //     res.status(401).json({ error: 'Unauthorized to delete this user' });
+        //     return;
+        // }
         let deleteResult;
         try {
             deleteResult = await User.deleteOne({ _id: req.params.userId });
