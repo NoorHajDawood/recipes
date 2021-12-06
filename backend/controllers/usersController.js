@@ -76,7 +76,7 @@ exports.usersController = {
         let recipes;
         result = [];
         for (let user of users) {
-            user = await getUserRecipes(user);
+            user = await updateUserRecipes(user);
             result.push(user);
         }
         res.status(200).json(result);
