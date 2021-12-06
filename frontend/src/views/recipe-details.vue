@@ -67,9 +67,12 @@ export default {
         },
          loadIsCreator(){
             const user = this.$store.getters.user;
-            this.isCreator = user.myRecipes.some(currRecipe=>{
+            if(user){
+                this.isCreator = user.myRecipes.some(currRecipe=>{
                 return this.recipe._id == currRecipe._id;
             });
+            }
+            
         },
         editRecipe(){
             this.$router.push('/recipe/edit/'+this.recipe._id);

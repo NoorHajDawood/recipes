@@ -1,11 +1,13 @@
 import { storageService } from './async-storage.service.js'
 import { storage } from './storage-service.js'
-// const axios = require('axios')
+const axios = require('axios')
 
 const Recipe_KEY = 'recipesDB';
 
 // var gToys = _createToys()
-_createRecipes();
+// _createRecipes();
+const Recipe_URL = `https://recipes-methods.herokuapp.com/`;
+
 
 export const recipesService = {
     query,
@@ -18,21 +20,21 @@ export const recipesService = {
 // TODO: support paging and filtering and sorting
 function query() {
     // filterBy
-    return storageService.query(Recipe_KEY)
-        // return axios.get(Recipe_URL, { params: filterBy }).then(res => res.data)
+    // return storageService.query(Recipe_KEY)
+    return axios.get(Recipe_URL + 'api/recipes').then(res => res.data)
 }
 
 function getById(id) {
     // return 
 
-    const recipe = storageService.get(Recipe_KEY, id)
-    return recipe;
-    // return axios.get(Recipe_URL + id).then(res => res.data)
+    // const recipe = storageService.get(Recipe_KEY, id)
+    // return recipe;
+    return axios.get(Recipe_URL + 'api/recipes/' + id).then(res => res.data)
 }
 
 function remove(id) {
-    return storageService.remove(Recipe_KEY, id)
-        // return axios.delete(Recipe_URL + id).then(res => res.data)
+    // return storageService.remove(Recipe_KEY, id)
+    return axios.delete(Recipe_URL + 'api/recipes/' + id).then(res => res.data)
 
 }
 

@@ -46,6 +46,7 @@ export const recipesStore = ({
         getRecipe({ commit }, { recipeId }) {
             return recipesService.getById(recipeId)
                 .then(recipe => {
+                    console.log(recipe);
                     commit({ type: "getRecipe", recipe })
                     return recipe;
                 })

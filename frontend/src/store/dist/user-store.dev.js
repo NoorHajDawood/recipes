@@ -11,7 +11,7 @@ var _bootstrapVue = require("bootstrap-vue");
 
 var userStore = {
   state: {
-    user: _userService.userService._createUser()
+    user: null
   },
   getters: {
     user: function user(state) {
@@ -35,7 +35,7 @@ var userStore = {
   },
   actions: {
     saveUser: function saveUser(_ref3, _ref4) {
-      var commit, user, userSaved;
+      var commit, user;
       return regeneratorRuntime.async(function saveUser$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -47,16 +47,14 @@ var userStore = {
               return regeneratorRuntime.awrap(_userService.userService.saveUser(user));
 
             case 5:
-              userSaved = _context.sent;
-              console.log(userSaved);
               commit({
                 type: "setUser",
-                savedUser: userSaved
+                savedUser: user
               });
-              return _context.abrupt("return", userSaved);
+              return _context.abrupt("return", user);
 
-            case 11:
-              _context.prev = 11;
+            case 9:
+              _context.prev = 9;
               _context.t0 = _context["catch"](2);
               console.log('cannot save user chages');
               this.$notify.error({
@@ -65,12 +63,12 @@ var userStore = {
               });
               throw _context.t0;
 
-            case 16:
+            case 14:
             case "end":
               return _context.stop();
           }
         }
-      }, null, this, [[2, 11]]);
+      }, null, this, [[2, 9]]);
     },
     login: function login(_ref5, _ref6) {
       var commit, user, savedUser;
@@ -81,20 +79,21 @@ var userStore = {
               commit = _ref5.commit;
               user = _ref6.user;
               _context2.prev = 2;
-              _context2.next = 5;
+              console.log('2', user);
+              _context2.next = 6;
               return regeneratorRuntime.awrap(_userService.userService.login(user));
 
-            case 5:
+            case 6:
               savedUser = _context2.sent;
               commit({
                 type: "setUser",
                 savedUser: savedUser
               });
-              _context2.next = 13;
+              _context2.next = 14;
               break;
 
-            case 9:
-              _context2.prev = 9;
+            case 10:
+              _context2.prev = 10;
               _context2.t0 = _context2["catch"](2);
               console.log("error login");
               this.$notify.error({
@@ -102,12 +101,12 @@ var userStore = {
                 message: 'Login error'
               });
 
-            case 13:
+            case 14:
             case "end":
               return _context2.stop();
           }
         }
-      }, null, this, [[2, 9]]);
+      }, null, this, [[2, 10]]);
     },
     logout: function logout(_ref7) {
       var commit;

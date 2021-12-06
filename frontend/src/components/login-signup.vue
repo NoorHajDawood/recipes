@@ -6,10 +6,10 @@
     <div class="card">
         <h1 class="title">Login</h1>
         <form @submit.prevent="makeLogin">
-            <div class="input-container"><input type="text"  v-bind="login.email" id="mail" required="required" /><label for="mail">Email</label>
+            <div class="input-container"><input type="text"  v-model="login.email" id="mail" required="required" /><label for="mail">Email</label>
                 <div class="bar"></div>
             </div>
-            <div class="input-container"><input type="password" v-bind="login.password" id="pass" required="required" /><label for="pass">Password</label>
+            <div class="input-container"><input type="password" v-model="login.password" id="pass" required="required" /><label for="pass">Password</label>
                 <div class="bar"></div>
             </div>
             <div class="button-container"><button ><span>Go</span></button></div>
@@ -46,6 +46,7 @@
         </form>
     </div>
 </div>
+{{login}}
     </div>
 </template>
 
@@ -57,8 +58,8 @@ export default {
         return {
             isRegister:false,
             login:{
-                email:"",
-                password:""
+                email:null,
+                password:null
             },
             registerUser:{
                 username:'',
@@ -73,6 +74,7 @@ export default {
     methods:{
         async makeLogin(){
             try{
+                console.log('1', this.login);
                 await this.$store.dispatch({type:"login", user:this.login});
                 this.$router.push('/');
                 //  this.$notify({
@@ -82,6 +84,10 @@ export default {
                 // });
             }
             catch(err){
+                this.$notify.error({
+                    title: 'Error',
+                    message: `Error Login`
+                });
                 console.log(err);
             }
         },

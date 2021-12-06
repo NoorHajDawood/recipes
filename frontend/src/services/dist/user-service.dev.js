@@ -4,10 +4,19 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.userService = void 0;
-// import Axios from 'axios';
-// var axios = Axios.create({ withCredentials: true }); // to accwpt cookies
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var axios = _axios["default"].create({
+  withCredentials: true
+}); // to accwpt cookies
+// credentials: "include"
 // const USER_URL = 
-var AUTH_URL = 'dd';
+
+
+var AUTH_URL = "https://recipes-methods.herokuapp.com/";
 var STORAGE_KEY = 'loggedinUser';
 var userService = {
   getLoggedinUser: getLoggedinUser,
@@ -16,9 +25,9 @@ var userService = {
   login: login,
   signup: signup,
   logout: logout
-};
+}; // saveUser(userService._createUser())
+
 exports.userService = userService;
-saveUser(userService._createUser());
 
 function saveUser(user) {
   return regeneratorRuntime.async(function saveUser$(_context) {
@@ -26,21 +35,30 @@ function saveUser(user) {
       switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
-          // async
-          sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-          return _context.abrupt("return", user);
+          _context.next = 3;
+          return regeneratorRuntime.awrap(axios.patch(AUTH_URL + 'api/users/' + user.id).data);
 
-        case 5:
-          _context.prev = 5;
+        case 3:
+          sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user)); // return user;
+
+          _context.next = 10;
+          break;
+
+        case 6:
+          _context.prev = 6;
           _context.t0 = _context["catch"](0);
+          this.$notify.error({
+            title: 'Error',
+            message: 'Error user not saved to storage'
+          });
           throw "user not saved to storage - DB ".concat(_context.t0);
 
-        case 8:
+        case 10:
         case "end":
           return _context.stop();
       }
     }
-  }, null, null, [[0, 5]]);
+  }, null, this, [[0, 6]]);
 }
 
 function logout() {
@@ -112,29 +130,88 @@ function getLoggedinUser() {
   }, null, null, [[0, 4]]);
 }
 
-function login(user) {
-  return regeneratorRuntime.async(function login$(_context5) {
+function testLogin() {
+  var url, config, params, result, user;
+  return regeneratorRuntime.async(function testLogin$(_context5) {
     while (1) {
       switch (_context5.prev = _context5.next) {
         case 0:
-          _context5.prev = 0;
-          // const res = await axios.post(AUTH_URL+'/login', {username, password});
-          // const user = res.data;
-          sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-          return _context5.abrupt("return", user);
-
-        case 5:
+          url = 'https://recipes-methods.herokuapp.com/api/sessions/login';
+          config = {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          };
+          params = new URLSearchParams();
+          params.append('email', 'noysh1234@gmail.com');
+          params.append('password', 'noy123');
           _context5.prev = 5;
-          _context5.t0 = _context5["catch"](0);
-          console.log('error login');
-          throw _context5.t0;
+          _context5.next = 8;
+          return regeneratorRuntime.awrap(axios.post(url, params, config));
 
-        case 9:
+        case 8:
+          result = _context5.sent;
+          user = result.data;
+          console.log(user);
+          _context5.next = 15;
+          break;
+
+        case 13:
+          _context5.prev = 13;
+          _context5.t0 = _context5["catch"](5);
+
+        case 15:
         case "end":
           return _context5.stop();
       }
     }
-  }, null, null, [[0, 5]]);
+  }, null, null, [[5, 13]]);
+}
+
+function login(user) {
+  var params, config, url, res, currUser;
+  return regeneratorRuntime.async(function login$(_context6) {
+    while (1) {
+      switch (_context6.prev = _context6.next) {
+        case 0:
+          _context6.prev = 0;
+          console.log('3', user);
+          console.log('kakakakakakakkakakakakdhdhdhdhdhdhdhdh');
+          params = new URLSearchParams();
+          params.append('email', user.email);
+          params.append('password', user.password);
+          config = {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          };
+          url = 'https://recipes-methods.herokuapp.com/api/sessions/login';
+          _context6.next = 10;
+          return regeneratorRuntime.awrap(axios.post(url, params, config));
+
+        case 10:
+          res = _context6.sent;
+          currUser = res.data;
+          console.log('4', currUser);
+          sessionStorage.setItem(STORAGE_KEY, JSON.stringify(currUser));
+          return _context6.abrupt("return", currUser);
+
+        case 17:
+          _context6.prev = 17;
+          _context6.t0 = _context6["catch"](0);
+          console.log("Login error", _context6.t0);
+          this.$notify.error({
+            title: 'Error',
+            message: 'Error Login'
+          });
+          throw _context6.t0;
+
+        case 22:
+        case "end":
+          return _context6.stop();
+      }
+    }
+  }, null, this, [[0, 17]]);
 }
 
 function _createUser() {

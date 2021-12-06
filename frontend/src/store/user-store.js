@@ -3,7 +3,7 @@ import { LayoutPlugin } from 'bootstrap-vue';
 
 export const userStore = {
     state: {
-        user: userService._createUser()
+        user: null
     },
     getters: {
         user(state) {
@@ -23,10 +23,9 @@ export const userStore = {
     actions: {
         async saveUser({ commit }, { user }) {
             try {
-                const userSaved = await userService.saveUser(user);
-                console.log(userSaved);
-                commit({ type: "setUser", savedUser: userSaved });
-                return userSaved;
+                await userService.saveUser(user);
+                commit({ type: "setUser", savedUser: user });
+                return user;
             } catch (err) {
                 console.log('cannot save user chages');
                 this.$notify.error({
@@ -38,6 +37,8 @@ export const userStore = {
         },
         async login({ commit }, { user }) {
             try {
+                console.log('2', user);
+
                 const savedUser = await userService.login(user);
                 commit({ type: "setUser", savedUser });
             } catch (err) {

@@ -1,8 +1,9 @@
-// import Axios from 'axios';
-// var axios = Axios.create({ withCredentials: true }); // to accwpt cookies
+import Axios from 'axios';
+var axios = Axios.create({ withCredentials: true }); // to accwpt cookies
 
+// credentials: "include"
 // const USER_URL = 
-const AUTH_URL = 'dd';
+const AUTH_URL = `https://recipes-methods.herokuapp.com/`;
 const STORAGE_KEY = 'loggedinUser';
 
 export const userService = {
@@ -14,14 +15,21 @@ export const userService = {
     logout
 }
 
-saveUser(userService._createUser())
+
+// saveUser(userService._createUser())
 
 async function saveUser(user) {
     try {
         // async
+        await axios.patch(AUTH_URL + 'api/users/' + user.id).data;
         sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-        return user;
+
+        // return user;
     } catch (err) {
+        this.$notify.error({
+            title: 'Error',
+            message: 'Error user not saved to storage'
+        });
         throw `user not saved to storage - DB ${err}`;
     }
 }
@@ -56,14 +64,51 @@ async function getLoggedinUser() {
     }
 }
 
+
+
+async function testLogin() {
+    const url = 'https://recipes-methods.herokuapp.com/api/sessions/login';
+    const config = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    };
+    const params = new URLSearchParams();
+    params.append('email', 'noysh1234@gmail.com');
+    params.append('password', 'noy123');
+    try {
+        const result = await axios.post(url, params, config);
+        const user = result.data;
+        console.log(user);
+    } catch (err) {}
+}
+
+
 async function login(user) {
     try {
-        // const res = await axios.post(AUTH_URL+'/login', {username, password});
-        // const user = res.data;
-        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-        return user;
+        console.log('3', user);
+        console.log('kakakakakakakkakakakakdhdhdhdhdhdhdhdh');
+        const params = new URLSearchParams();
+        params.append('email', user.email);
+        params.append('password', user.password);
+        const config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        };
+        const url = 'https://recipes-methods.herokuapp.com/api/sessions/login';
+
+        const res = await axios.post(url, params, config);
+        const currUser = res.data;
+        console.log('4', currUser);
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(currUser));
+        return currUser;
     } catch (err) {
-        console.log('error login');
+        console.log(`Login error`, err);
+        this.$notify.error({
+            title: 'Error',
+            message: 'Error Login'
+        });
         throw err;
     }
 }
