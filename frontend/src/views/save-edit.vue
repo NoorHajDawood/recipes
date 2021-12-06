@@ -93,10 +93,17 @@ export default {
 data(){
     return {
         recipeToEdit:null,
-        step:0.05
+        step:0.05,
     }
 },
 created(){
+    if(!this.$store.getters.user){
+        this.$notify.error({
+                  title: 'Error',
+                  message: 'User must been login'
+              });
+        this.$router.push('/login'); 
+    }
     const recipeId = this.getRecipeId;  
     if(recipeId){
         this.$store.dispatch({type:"getRecipe", recipeId})
@@ -105,6 +112,15 @@ created(){
         });
     }else{
         this.recipeToEdit = this.emptyRecipe();
+        this.recipeToEdit.memberId = this.$store.getters.user._id;
+        if(!this.recipeToEdit.memberId){
+            this.$notify.error({
+                  title: 'Error',
+                  message: 'User must been login'
+              });
+            this.$router.push('/');
+        }
+
     }
     },
     methods: {
@@ -147,14 +163,23 @@ created(){
             if(!this.getRecipeId){
                 this.$store.dispatch({type:"addRecipe", recipe:this.recipeToEdit})
                     .then(recipe=>{
-                        // send msg
+                        this.$store.dispatch({type:'addRecipeToUser', recipe:recipe})
                         this.$router.push('/');
+                        this.$notify({
+                            title: 'Save successfly',
+                            message: 'Your recipe saved :)',
+                            type: 'success'
+                        });
                     })
             }
             else{
                 this.$store.dispatch({type:"updateRecipe", recipe:this.recipeToEdit})
                     .then(recipe =>{
-                        // send msg
+                        this.$notify({
+                            title: 'Save successfly',
+                            message: 'Your recipe been update :)',
+                            type: 'success'
+                        });
                         this.$router.push('/');
                     })
             }

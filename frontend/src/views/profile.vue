@@ -49,6 +49,8 @@
                     </div>
                 </div>
             </div>
+            <el-button type="danger" @click.prevent="logout" class="logout" round>Logout</el-button>
+
         </div>
     </div>
 </div>
@@ -76,6 +78,11 @@ export default {
         async changeEditMode(){
             if(this.isEditMode){
                 const savedUser =await this.$store.dispatch({type:"saveUser", user: this.loginUser});
+                this.$notify({
+                      title: 'Success Update',
+                      message: 'Profile updaed succsessfully',
+                      type: 'success'
+                });
                 this.loginUser = JSON.parse(JSON.stringify(savedUser));
             }
             this.isEditMode = !this.isEditMode;
@@ -91,6 +98,10 @@ export default {
         },
         movePage(id){
             this.$router.push('/recipe/'+id)
+        },
+        logout(){
+            this.$store.dispatch({type:'logout'});
+            this.$router.push('/login');
         }
     },
     computed:{
@@ -101,4 +112,3 @@ export default {
 }
 </script>
 
-</style>

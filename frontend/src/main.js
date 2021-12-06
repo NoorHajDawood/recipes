@@ -9,7 +9,7 @@ import PrettyCheckbox from 'pretty-checkbox-vue';
 
 
 // use element
-import { InputNumber } from 'element-ui';
+import { InputNumber, Button, ButtonGroup, Notification } from 'element-ui';
 import { TimePicker, TimeSelect } from 'element-ui';
 import { Radio, RadioGroup, RadioButton } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -19,6 +19,9 @@ Vue.use(TimeSelect);
 Vue.use(Radio);
 Vue.use(RadioGroup);
 Vue.use(RadioButton);
+Vue.use(Button);
+Vue.use(ButtonGroup);
+Vue.prototype.$notify = Notification;
 
 
 // bootstrap
@@ -27,6 +30,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+
 
 
 

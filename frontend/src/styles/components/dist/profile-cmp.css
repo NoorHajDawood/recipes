@@ -1,0 +1,51 @@
+.user-profile h1,
+.user-profile h2,
+.user-profile h4,
+.user-profile h5,
+.user-profile h3 {
+  font-family: GreatVibes;
+}
+.user-profile .profile-head {
+  transform: translateY(5rem);
+}
+.user-profile .cover {
+  background-image: url(https://i.pinimg.com/originals/4a/80/99/4a8099c6460074d421d152bd1f4efbf7.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.user-profile .cover p,
+.user-profile .cover h4 {
+  background-color: #242323b0;
+}
+.user-profile .pb-4 {
+  padding-bottom: 4.5rem !important;
+}
+.user-profile .edit-profile {
+  margin-top: 5px;
+}
+.user-profile textarea {
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  resize: none;
+}
+.user-profile pre,
+.user-profile p {
+  font-family: Courgette;
+  font-size: rem(18px);
+}
+.user-profile .py-5 {
+  padding-top: 0;
+}
+.user-profile .row {
+  --bs-gutter-x: 0rem;
+}
+.user-profile .logout {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

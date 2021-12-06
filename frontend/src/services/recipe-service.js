@@ -31,7 +31,7 @@ function getById(id) {
 }
 
 function remove(id) {
-    return storageService.remove(Recipe_URL, id)
+    return storageService.remove(Recipe_KEY, id)
         // return axios.delete(Recipe_URL + id).then(res => res.data)
 
 }

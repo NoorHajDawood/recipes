@@ -1,4 +1,11 @@
 .user-profile {
+    h1,
+    h2,
+    h4,
+    h5,
+    h3 {
+        font-family: GreatVibes;
+    }
     .profile-head {
         transform: translateY(5rem)
     }
@@ -36,5 +43,12 @@
     }
     .py-5 {
         padding-top: 0;
+    }
+    .row {
+        --bs-gutter-x: 0rem;
+    }
+    .logout {
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
 }

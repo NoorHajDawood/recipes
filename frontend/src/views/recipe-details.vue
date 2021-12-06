@@ -33,6 +33,11 @@
                 </li>
                 </ul>
                 <h1>bon appetit <span class="food"/></h1>
+                <div class="isAditor">
+                    <el-button type="primary" @click.prevent="editRecipe" v-if="isCreator" icon="el-icon-edit" circle></el-button>
+                    <el-button type="danger" @click.prevent="deleteRecipe" v-if="isCreator" icon="el-icon-delete" circle></el-button>
+                </div>
+                
         </div>
         <div v-else class="containe-loader">
             <div class="loading">
@@ -47,22 +52,37 @@ export default {
     // name:"RecipeDetails",
     data(){
         return{
-            recipe:null
+            recipe:null,
+            isCreator:false
         }
     },
-    created(){
-        this.loadRecipe();
+    async created(){
+        await this.loadRecipe();
+        this.loadIsCreator();
     },
     methods: {
-        loadRecipe(){
+        async loadRecipe(){
             const {recipeId} = this.$route.params;
-            this.$store.dispatch({type:"getRecipe", recipeId})
-         
-                .then(recipe=> {this.recipe = recipe;
-                }
-
-                
-                );
+            this.recipe  = await this.$store.dispatch({type:"getRecipe", recipeId});
+        },
+         loadIsCreator(){
+            const user = this.$store.getters.user;
+            this.isCreator = user.myRecipes.some(currRecipe=>{
+                return this.recipe._id == currRecipe._id;
+            });
+        },
+        editRecipe(){
+            this.$router.push('/recipe/edit/'+this.recipe._id);
+        },
+        deleteRecipe(){
+            this.$store.dispatch({type:'removeRecipe', recipeId:this.recipe._id});
+            this.$store.dispatch({type:'removeRecipeFromUser', recipeId:this.recipe._id});
+            this.$notify({
+                title: 'Delete Success',
+                message: 'Delete recipe Success',
+                 type: 'success'
+            });
+            this.$router.push('/');
         }
     },
 

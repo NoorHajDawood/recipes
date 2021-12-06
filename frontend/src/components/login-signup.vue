@@ -74,8 +74,12 @@ export default {
         async makeLogin(){
             try{
                 await this.$store.dispatch({type:"login", user:this.login});
-                console.log('lll');
                 this.$router.push('/');
+                //  this.$notify({
+                //     title: 'Welcome back ',
+                //     message: 'Welcome back',
+                //     type: 'success'
+                // });
             }
             catch(err){
                 console.log(err);
@@ -88,6 +92,11 @@ export default {
                 }
                 await this.$store.dispatch({type:'signup', user:this.registerUser});
                 this.$router.push('/');
+                //  this.$notify({
+                //     title: 'Welcome !',
+                //     message: 'Welcome!',
+                //     type: 'success'
+                // });
             }
             catch(err){
                 throw err;

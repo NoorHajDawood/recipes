@@ -10,17 +10,27 @@ export const userService = {
     saveUser,
     _createUser,
     login,
-    signup
+    signup,
+    logout
 }
 
 saveUser(userService._createUser())
 
 async function saveUser(user) {
     try {
-        await sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+        // async
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
         return user;
     } catch (err) {
         throw `user not saved to storage - DB ${err}`;
+    }
+}
+
+async function logout() {
+    try {
+        sessionStorage.clear();
+    } catch (err) {
+        throw `error - logout ${err}`;
     }
 }
 
@@ -34,7 +44,6 @@ async function signup(user) {
         throw err;
     }
 }
-
 
 async function getLoggedinUser() {
     try {
@@ -78,16 +87,13 @@ function _createUser() {
                 "img": "https://upload.wikimedia.org/wikipedia/commons/0/04/Pound_layer_cake.jpg"
             }
         ],
-        "favorites": [{
-                "img": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8N3x8fGVufDB8fHx8&w=1000&q=80",
-                "_id": "f101"
-            },
-
-        ]
+        "favorites": []
     }
 }
 
 
+//   "img": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8N3x8fGVufDB8fHx8&w=1000&q=80",
+// "_id": "f101"
 // async function login(user) {
 //     try {
 //         const res = await axios.post(AUTH_URL + '/login', user);

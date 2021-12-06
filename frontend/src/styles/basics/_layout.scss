@@ -16,6 +16,11 @@
     @include for-wide-layout {
         @include layoutGTC($break-wide);
     }
+    ul {
+        margin-right: 0;
+        margin-left: 0;
+        padding: 0;
+    }
 }
 
 .card-grid {

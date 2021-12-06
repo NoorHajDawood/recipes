@@ -4,10 +4,13 @@
     box-shadow: 2px 2px 8px 4px;
     border-radius: 10px;
     transition: transform 0.5s;
+    position: relative;
     h2 {
+        margin-top: 10px;
         font-weight: 400;
         font-size: rem(28px);
         margin-bottom: 0;
+        font-family: GreatVibes;
     }
     img.recipe-image {
         border-top-right-radius: 10px;
@@ -38,6 +41,14 @@
         margin-inline-end: 0px;
         padding-inline-start: 0 !important;
     }
+    .flex {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        h2 {
+            margin: 0;
+        }
+    }
     // &::before {
     //     content: "";
     //     background: linear-gradient(to top, $clr1 0%, rgba($clr1, 0) 100%);;
@@ -47,6 +58,22 @@
     //     width: 100%;
     //     height: 100%;
     // }
+}
+
+.heart {
+    position: absolute;
+    left: 55px;
+    width: 100px;
+    height: 100px;
+    background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;
+    background-position: 0 0;
+    cursor: pointer;
+    transition: background-position 1s steps(28);
+    transition-duration: 0s;
+    &.is-active {
+        transition-duration: 1s;
+        background-position: -2800px 0;
+    }
 }
 
 .button-add-recipe {

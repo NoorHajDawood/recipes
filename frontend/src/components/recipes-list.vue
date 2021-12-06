@@ -2,18 +2,17 @@
     <section class="main-layout">
         <ul class="card-grid center margin-top">
         <li v-for="recipe in recipes"  :key="recipe._id" @click="recipeDetails(recipe._id)">
-            <recipe-preview :recipePrev="recipe"  />
+            <recipe-preview :recipePrev="recipe" :loggedUser="loggedUser" @removeFavorite="removeFavorite" @addFavorite="addFavorite"/>
         </li>
         </ul>
         <div class="button-add-recipe" @click="addRecipe"></div>
-        <button @click="move">Profile</button>
     </section>
 </template>
 
 <script>
     import recipePreview from './recipe-preview.vue'
 export default {
-props:["recipes"],
+props:["recipes", "loggedUser"],
 methods:{
     recipeDetails(recipeId){
         this.$router.push('/recipe/'+recipeId);
@@ -21,9 +20,14 @@ methods:{
     addRecipe(){
         this.$router.push('/recipe/edit')
     },
-    move(){
-        this.$router.push('/user/#');
+    addFavorite(recipe){
+        this.$emit('addFavorite', recipe)
+    },
+    removeFavorite(recipe){
+        this.$emit('removeFavorite', recipe)
     }
+     
+    
 },
 components:{
     recipePreview
