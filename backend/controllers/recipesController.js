@@ -8,7 +8,7 @@ exports.recipesController = {
         try {
             docs = await Recipe.findOne({ _id: recipeIdParam });
             if (docs) {
-                res.status(200).json({ docs });
+                res.status(200).json(docs);
             }
             else {
                 res.status(404).json({ error: `Recipe with id : ${recipeIdParam} not found` });
