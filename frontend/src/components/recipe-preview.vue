@@ -18,7 +18,7 @@ export default {
       }
     },
     created() {
-      if(this.loggedUser){
+      if(this.loggedUser && this.loggedUser.favorites){
         this.isFavorite = this.loggedUser.favorites.some(recipe=>{
         return recipe._id ==this.recipePrev._id;
       });

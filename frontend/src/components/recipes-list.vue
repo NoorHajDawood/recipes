@@ -1,5 +1,6 @@
 <template >
     <section class="main-layout">
+    {{ blablalbalblablalba }}
         <ul class="card-grid center margin-top">
         <li v-for="recipe in recipes"  :key="recipe._id" @click="recipeDetails(recipe._id)">
             <recipe-preview :recipePrev="recipe" :loggedUser="loggedUser" @removeFavorite="removeFavorite" @addFavorite="addFavorite"/>

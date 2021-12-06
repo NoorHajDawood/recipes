@@ -28,25 +28,16 @@ export const userStore = {
                 return user;
             } catch (err) {
                 console.log('cannot save user chages');
-                this.$notify.error({
-                    title: 'Error',
-                    message: 'Cant save changes'
-                });
                 throw err;
             }
         },
         async login({ commit }, { user }) {
             try {
-                console.log('2', user);
-
                 const savedUser = await userService.login(user);
                 commit({ type: "setUser", savedUser });
             } catch (err) {
                 console.log("error login");
-                this.$notify.error({
-                    title: 'Error',
-                    message: 'Login error'
-                });
+                throw err;
             }
 
         },
@@ -56,10 +47,8 @@ export const userStore = {
                 commit({ type: 'setUser', savedUser: null });
             } catch (err) {
                 console.log(err);
-                this.$notify.error({
-                    title: 'Error',
-                    message: 'Logout error'
-                });
+                throw err;
+
             }
         },
         async signup({ commit }, { user }) {
@@ -68,10 +57,6 @@ export const userStore = {
                 commit({ type: "setUser", savedUser });
                 return user;
             } catch (err) {
-                this.$notify.error({
-                    title: 'Error',
-                    message: 'Sign-up error'
-                });
                 throw err;
             }
         },
@@ -79,10 +64,6 @@ export const userStore = {
             try {
                 commit({ type: 'addRecipeUser', recipe })
             } catch (err) {
-                this.$notify.error({
-                    title: 'Error',
-                    message: 'Error save changes'
-                });
                 throw err;
             }
         },
@@ -95,10 +76,6 @@ export const userStore = {
                 user.myRecipes.splice(idx, 1);
                 await dispatch({ type: 'saveUser', user });
             } catch (err) {
-                this.$notify.error({
-                    title: 'Error',
-                    message: 'Error save changes'
-                });
                 throw err;
             }
         }

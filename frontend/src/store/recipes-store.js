@@ -1,6 +1,5 @@
 import { recipesService } from '@/services/recipe-service.js';
 
-
 export const recipesStore = ({
     strict: true,
     state: {
@@ -23,65 +22,65 @@ export const recipesStore = ({
         getRecipe(state, { recipe }) {
             state.currRecipe = recipe;
         },
-        addRecipe(state, { recipe }) {
-            state.recipes.unshift(recipe);
-        },
-        updateRecipe(state, { recipe }) {
-            const idx = state.recipes.findIndex(saveRecipe => recipe._id == saveRecipe._id);
-            state.recipes.splice(idx, 1, recipe);
-        },
-        removeRecipe(state, { recipeId }) {
-            const idx = state.recipes.findIndex(recipe => recipe._id == recipeId);
-            state.recipes.splice(idx, 1);
-        }
+        // addRecipe(state, { recipe }) {
+        //     state.recipes.unshift(recipe);
+        // },
+        // updateRecipe(state, { recipe }) {
+        //     const idx = state.recipes.findIndex(saveRecipe => recipe._id == saveRecipe._id);
+        //     state.recipes.splice(idx, 1, recipe);
+        // },
+        // removeRecipe(state, { recipeId }) {
+        //     const idx = state.recipes.findIndex(recipe => recipe._id == recipeId);
+        //     state.recipes.splice(idx, 1);
+        // }
 
     },
     actions: {
-        loadRecipes({ commit, state }) {
+        loadRecipes({ commit }) {
             recipesService.query()
                 .then((recipes) => {
                     commit({ type: 'setRecipes', recipes })
                 })
+                .catch((err) => {
+                    throw err;
+                });
         },
         getRecipe({ commit }, { recipeId }) {
             return recipesService.getById(recipeId)
                 .then(recipe => {
-                    console.log(recipe);
                     commit({ type: "getRecipe", recipe })
                     return recipe;
                 })
+                .catch((err) => {
+                    throw err;
+                })
         },
-        addRecipe({ commit }, { recipe }) {
+        addRecipe({ dispatch }, { recipe }) {
+            console.log(`Store addRecipe: `, recipe);
             return recipesService.save(recipe).then(savedRecipe => {
-                commit({ type: "addRecipe", recipe: savedRecipe });
+                console.log('recive recipe 555 - before dispatch', savedRecipe);
+                dispatch({ type: "loadRecipes" });
+                console.log('recipeAdd5 - after dispatch', savedRecipe);
                 return savedRecipe;
-            }).catch(() => {
-                this.$notify.error({
-                    title: 'Error',
-                    message: 'Error save recipe'
-                });
+            }).catch((err) => {
+                throw err;
             })
         },
-        updateRecipe({ commit }, { recipe }) {
+        updateRecipe({ dispatch }, { recipe }) {
             return recipesService.save(recipe).then(updatedRecipe => {
-                commit({ type: "updateRecipe", recipe: updatedRecipe });
+                dispatch({ type: "loadRecipes" });
+
                 return updatedRecipe;
-            }).catch(err => {
-                this.$notify.error({
-                    title: 'Error',
-                    message: 'Error save changes'
-                });
-            });
+            }).catch((err) => {
+                throw err;
+            })
         },
-        async removeRecipe({ commit }, { recipeId }) {
+        async removeRecipe({ dispatch }, { recipeId }) {
             try {
                 await recipesService.remove(recipeId);
-                commit({ type: 'removeRecipe', recipeId });
+                dispatch({ type: "loadRecipes" });
+
             } catch (err) {
-                this.$notify.error({
-                    title: 'Error',
-                    message: 'Error remove recipe'
-                });
                 throw err;
             }
         },
@@ -98,3 +97,5 @@ export const recipesStore = ({
     },
     modules: {},
 });
+
+window.recipeStore = recipesStore

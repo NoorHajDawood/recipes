@@ -46,7 +46,7 @@
         </form>
     </div>
 </div>
-{{login}}
+{{registerUser}}
     </div>
 </template>
 
@@ -74,21 +74,23 @@ export default {
     methods:{
         async makeLogin(){
             try{
-                console.log('1', this.login);
                 await this.$store.dispatch({type:"login", user:this.login});
                 this.$router.push('/');
-                //  this.$notify({
-                //     title: 'Welcome back ',
-                //     message: 'Welcome back',
-                //     type: 'success'
-                // });
+                 this.$notify({
+                    title: `Welcome back ${this.$store.getters.user.username}`,
+                    message: `Welcome back  ${this.$store.getters.user.username}`,
+                    type: 'success'
+                });
             }
             catch(err){
+                let msg = err.response.data.error
+                if(err.response.status == 500){
+                    msg = 'try again;'
+                }
                 this.$notify.error({
                     title: 'Error',
-                    message: `Error Login`
+                    message: msg
                 });
-                console.log(err);
             }
         },
         async signup(){

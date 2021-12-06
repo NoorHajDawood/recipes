@@ -127,7 +127,6 @@ created(){
         emptyRecipe(){
            
          return ({
-                    "_id": 0,
                     "title": "",
                     "imageUrl": "",
                     "description": "",
@@ -173,8 +172,10 @@ created(){
                     })
             }
             else{
+                console.log('recipeAdd1', this.recipeToEdit);
                 this.$store.dispatch({type:"updateRecipe", recipe:this.recipeToEdit})
                     .then(recipe =>{
+                        console.log('recipeSaveADD6', recipe);
                         this.$notify({
                             title: 'Save successfly',
                             message: 'Your recipe been update :)',

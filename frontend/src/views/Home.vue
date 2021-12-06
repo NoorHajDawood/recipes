@@ -21,6 +21,13 @@ export default {
     listRecipes
   },
   methods:{
+    mounted() {
+      this.$store.dispatch({type:'loadRecipes'})
+      window.homeComponent = this
+    },
+    beforeDestroy() {
+      window.homeComponent = undefined
+    },
     removeFavorite(recipe){
     this.$store.dispatch({type:'removeLikeFromRecipe', recipe});
     this.loggedUser = JSON.parse(JSON.stringify(this.loggedUser));
@@ -36,6 +43,7 @@ export default {
     this.loggedUser.favorites.push({'_id':recipe._id, 'img':recipe.imageUrl});
     this.$store.dispatch({type:'saveUser', user:this.loggedUser});
   },
+  
   },
   computed:{
     recipes(){

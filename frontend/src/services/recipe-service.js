@@ -6,15 +6,14 @@ const Recipe_KEY = 'recipesDB';
 
 // var gToys = _createToys()
 // _createRecipes();
-const Recipe_URL = `https://recipes-methods.herokuapp.com/`;
-
+const Recipe_URL = `/`;
+// https://recipes-methods.herokuapp.com/
 
 export const recipesService = {
     query,
     getById,
     remove,
-    save,
-    getEmptyRecipe
+    save
 }
 
 // TODO: support paging and filtering and sorting
@@ -35,25 +34,23 @@ function getById(id) {
 function remove(id) {
     // return storageService.remove(Recipe_KEY, id)
     return axios.delete(Recipe_URL + 'api/recipes/' + id).then(res => res.data)
-
 }
 
-function save(recipe) {
-    const savedrecipe = (recipe._id) ? storageService.put(Recipe_KEY, recipe) : storageService.post(Recipe_KEY, recipe)
-    return savedrecipe;
-    // if (recipe._id) {
-    //     return axios.put(Recipe_URL + `${recipe._id}`, recipe).then(res => res.data)
-    // } else {
-    //     return axios.post(Recipe_URL, recipe).then(res => res.data)
-    // }
-}
-
-
-function getEmptyRecipe() {
-    return {
-
+async function save(recipe) {
+    // const savedrecipe = (recipe._id) ? storageService.put(Recipe_KEY, recipe) : storageService.post(Recipe_KEY, recipe)
+    const url = '/api/recipes';
+    console.log('save(recipe): ');
+    if (recipe._id) {
+        console.log(`updating recipe ${recipe._id}`);
+        return await axios.patch(url + `/${recipe._id}`, recipe).data;
+    } else {
+        console.log('adding new recipe', recipe);
+        const addResult = await axios.post(url, recipe);
+        console.log('addReulst:', addResult.data);
+        return addResult.data;
     }
 }
+
 
 function _createRecipes() {
     var recipes = storage.load(Recipe_KEY)
