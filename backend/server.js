@@ -9,7 +9,7 @@ const { SESSION_SECRET } = require("./constants");
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors({credentials: true, origin: true}));
+app.use(cors());
 const corsConfig = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Credentials', true)

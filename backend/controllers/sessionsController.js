@@ -18,7 +18,7 @@ exports.sessionsController = {
             if (password == user.password) {
                 user.session = req.session;
                 user.session.sessionID = req.sessionID;
-                user.session.userId = user.id;
+                // user.session.userId = user.id;
             }
             else {
                 res.status(403).json({ error: 'Invalid password' });
@@ -42,6 +42,6 @@ exports.sessionsController = {
         res.redirect('/');
     },
     isAuthorized(req) {
-        return req.session && req.session.userId;
+        return req.session ; // && req.session.userId
     }
 };
