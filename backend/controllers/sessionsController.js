@@ -28,8 +28,8 @@ exports.sessionsController = {
 
             try {
                 await User.updateOne({ _id: docs.id }, { session: docs.session });
-                res.json(docs);
-                // res.redirect(`/api/users/${docs.id}`)
+                // res.json(docs);
+                res.redirect(`/api/users/${docs.id}`)
             } catch (err) {
                 res.status(500).json({ error: `Error updating session for User ${req.params.userId} : ${err}` });
                 return;
