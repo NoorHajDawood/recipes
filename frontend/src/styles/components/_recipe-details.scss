@@ -87,6 +87,20 @@
         justify-content: flex-end;
         margin-inline-end: rem(30px);
     }
+    .flexContainDelete {
+        display: flex;
+        align-items: center;
+    }
+    .BtnSave {
+        border: none;
+        padding: 10px;
+        font-family: Courgette;
+        background-color: $clrC;
+        font-size: rem(20px);
+        box-shadow: 0px 1px 4px 1px;
+        background-color: #fbd0ab;
+        border-radius: 20px;
+    }
 }
 
 .card-detail {

@@ -36,8 +36,8 @@ export const recipesStore = ({
 
     },
     actions: {
-        loadRecipes({ commit }) {
-            recipesService.query()
+        loadRecipes({ commit }, { filter }) {
+            recipesService.query(filter)
                 .then((recipes) => {
                     commit({ type: 'setRecipes', recipes })
                 })
@@ -59,7 +59,8 @@ export const recipesStore = ({
             console.log(`Store addRecipe: `, recipe);
             return recipesService.save(recipe).then(savedRecipe => {
                 console.log('recive recipe 555 - before dispatch', savedRecipe);
-                dispatch({ type: "loadRecipes" });
+                const filter = { 'title': '', 'sort': 'likes' };
+                dispatch({ type: "loadRecipes", filter });
                 console.log('recipeAdd5 - after dispatch', savedRecipe);
                 return savedRecipe;
             }).catch((err) => {
@@ -68,7 +69,8 @@ export const recipesStore = ({
         },
         updateRecipe({ dispatch }, { recipe }) {
             return recipesService.save(recipe).then(updatedRecipe => {
-                dispatch({ type: "loadRecipes" });
+                const filter = { 'title': '', 'sort': 'likes' };
+                dispatch({ type: "loadRecipes", filter });
 
                 return updatedRecipe;
             }).catch((err) => {

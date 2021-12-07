@@ -65,8 +65,18 @@ export default {
             const {recipeId} = this.$route.params;
             this.recipe  = await this.$store.dispatch({type:"getRecipe", recipeId});
         },
-         loadIsCreator(){
-            const user = this.$store.getters.user;
+        async loadIsCreator(){
+            // const user = this.$store.getters.user;
+            let user = this.$store.getters.user;
+            if(!user) {
+                console.log('refresh Home page - noy');
+                user = await this.$store.dispatch({type:'getLoginUser'});
+                console.log('after dispach -o ');
+            }
+            //if(user){
+            //    this.loggedUser = JSON.parse(JSON.stringify(user));
+            //}
+            //return this.loggedUser
             if(user){
                 this.isCreator = user.myRecipes.some(currRecipe=>{
                 return this.recipe._id == currRecipe._id;

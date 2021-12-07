@@ -33,12 +33,20 @@ export default {
           this.isNavShow = !this.isNavShow;
         },
         refreshCache() {
-          this.$store.dispatch({type:'loadRecipes'})
+           const filter ={'title':'', 'sort':'likes'};
+          this.$store.dispatch({type:'loadRecipes', filter})
         }
     },
     computed:{
        loginUser(){
-          return this.$store.getters.user;
+         let user = this.$store.getters.user;
+          //if(!user) {
+          //  console.log('refresh Home page - noy');
+          //  user = await this.$store.dispatch({type:'getLoginUser'});
+          //  console.log('after dispach -o ');
+          //}
+          console.log('loguser',user);
+          return user ? true : false; 
         },
     }
 }

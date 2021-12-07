@@ -18,9 +18,25 @@ exports.recipesController = {
 
     },
     async getRecipes(req, res) {
+
         let docs;
         try {
-            docs = await Recipe.find({});
+            const filter = {};
+            if (req.query && req.query.title) {
+                filter.title = new RegExp(req.query.title, 'i');
+            }
+            const sort = {};
+            if (req.query && req.query.sort) {
+                if (req.query.sort == 'title' || req.query.sort == 'prepTime') {
+                    sort[req.query.sort] = 1;
+                } else if (req.query.sort == 'likes') {
+                    sort[req.query.sort] = -1;
+                }
+            }
+            // .sort({'title': 1})
+            // sort['title'] = 1
+            docs = await Recipe.find(filter).sort(sort);
+
         } catch (err) {
             res.status(500).json({ error: `Error get all recipes : ${err}` });
             return;

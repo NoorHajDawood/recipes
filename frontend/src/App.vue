@@ -14,7 +14,8 @@ import appHeader from '@/components/app-header.vue';
 export default {
   name:"App",
   created(){
-    this.$store.dispatch({type:'loadRecipes'})
+    const filter ={'title':'', 'sort':'likes'};
+    this.$store.dispatch({type:'loadRecipes', filter})
   },
   components:{
     appHeader

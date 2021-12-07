@@ -94,8 +94,20 @@ exports.usersController = {
         res.status(200).json(result);
     },
     async addUser(req, res) {
-        const newUser = new User(req.body);
         let user;
+
+        try {
+            user = await User.findOne({ email: req.body.email });
+            if (user) {
+                // return error already exists
+                res.status(403).json({ error: "Email already registered" });
+                return;
+            }
+        } catch (err) {
+            res.status(400).json({ error: `Error get User: ${userIdParam} : ${err}` });
+            return;
+        }
+        const newUser = new User(req.body);
         try {
             user = await newUser.save();
             user = await updateReturnedUser(user);

@@ -45,7 +45,8 @@ app.use('/api/recipes', recipesRouter);
 app.use('/api/users', usersRouter);
 
 app.use((req, res) => {
-    res.status(404).send(`Page not found`);
+    // res.status(404).send(`Page not found`);
+    res.status(404).redirect('/');
 });
 
 app.listen(port, () => console.log(`Express server is running on port ${port}`));

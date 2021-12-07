@@ -33,6 +33,7 @@ async function saveUser(user) {
 async function logout() {
     try {
         sessionStorage.clear();
+        await axios.get('/api/sessions/logout');
     } catch (err) {
         throw `error - logout ${err}`;
     }
@@ -43,18 +44,28 @@ async function signup(user) {
         user.favorites = [];
         user.myRecipes = [];
         const res = await axios.post('/api/users', user);
+        res.data.password = user.password
+        user = res.data;
+        // user._id = res.data._id;
         await login(user);
         sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
         return user;
     } catch (err) {
-        console.log(`signup error ${err}`);
         throw err;
     }
 }
 
 async function getLoggedinUser() {
     try {
-        return JSON.parse(sessionStorage.getItem(STORAGE_KEY));
+        let user = JSON.parse(sessionStorage.getItem(STORAGE_KEY));
+        if (!user) {
+            try {
+                const tempUser = (await axios.post('/api/sessions/login', {})).data;
+                user = tempUser;
+                sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+            } catch (err) {}
+        }
+        return user;
     } catch (err) {
         throw err;
     }
@@ -76,7 +87,6 @@ async function login(user) {
 
         return currUser;
     } catch (err) {
-        console.log(`Login error ${err}`);
         throw err;
     }
 }

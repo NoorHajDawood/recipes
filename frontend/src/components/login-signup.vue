@@ -98,15 +98,22 @@ export default {
                     this.registerUser.userImg = 'https://i.pinimg.com/564x/bb/18/3a/bb183a6e148512c3b7cea8e1584f3adf.jpg';
                 }
                 await this.$store.dispatch({type:'signup', user:this.registerUser});
+                 this.$notify({
+                    title: 'Welcome !',
+                    message: 'Welcome!',
+                    type: 'success'
+                });
                 this.$router.push('/');
-                //  this.$notify({
-                //     title: 'Welcome !',
-                //     message: 'Welcome!',
-                //     type: 'success'
-                // });
             }
             catch(err){
-                throw err;
+                let msg = err.response.data.error
+                if(err.response.status == 500){
+                    msg = 'try again;'
+                }
+                this.$notify.error({
+                    title: 'Error',
+                    message: msg
+                });
             }
         }
 

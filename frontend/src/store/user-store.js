@@ -60,6 +60,15 @@ export const userStore = {
                 throw err;
             }
         },
+        async getLoginUser({ commit }) {
+            try {
+                const user = await userService.getLoggedinUser();
+                commit({ type: "setUser", user });
+                return user;
+            } catch (err) {
+                throw err;
+            }
+        },
         async addRecipeToUser({ commit }, { recipe }) {
             try {
                 commit({ type: 'addRecipeUser', recipe })

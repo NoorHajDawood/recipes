@@ -37,17 +37,20 @@
         <h2>Ingredients</h2>
 
         <div class="ingredient" v-for="(ingredient, idx1) in recipeToEdit.ingredients" :key="idx1">
-       
-        
-            <label class="input" >
-                <input class="input__field"  v-model="recipeToEdit.ingredients[idx1].name" type="text" placeholder=" " />
-                <span class="input__label">Ingredient {{idx1+1}}</span>
-            </label>
+        <div class="flexContainDelete">
+                <label class="input" >
+                    <input class="input__field"  v-model="recipeToEdit.ingredients[idx1].name" type="text" placeholder=" " />
+                    <span class="input__label">Ingredient {{idx1+1}}</span>
+                </label>
+            <el-button type="danger" @click="removeIngredient(udx1)"  icon="el-icon-delete" circle></el-button>
+        </div>
+          
             
         
             <div class="select-unit">
                     <el-radio-group size="mini" v-model="recipeToEdit.ingredients[idx1].unit">
                         <el-radio-button  label="cups"></el-radio-button>
+                        <el-radio-button  label="piece"></el-radio-button>
                         <el-radio-button  label="tabelspoons"></el-radio-button>
                         <el-radio-button  label="teaspoons"></el-radio-button>
                         <el-radio-button  label="liters"></el-radio-button>
@@ -67,15 +70,18 @@
         </div>
         <h2>Steps</h2>
         <div class="ingredient" v-for="(instruction, idx) in recipeToEdit.instructions" :key="idx+100">
+        <div class="flexContainDelete">
             <label class="input" >
                 <input class="input__field"  v-model="recipeToEdit.instructions[idx]" type="text" placeholder=" " />
                 <span class="input__label">Step {{idx+1}}</span>
             </label>
+            <el-button type="danger" @click="removeInstruction(idx)"  icon="el-icon-delete" circle></el-button>
+        </div>
         </div>
         <div class="button-h3">
             <div class="addButton" @click="addInstruction"></div><h3>Add Instruction</h3>
         </div>
-        <button>Save</button>
+        <button class="BtnSave">Save</button>
     </form>
     </section>
     </section>
@@ -96,8 +102,13 @@ data(){
         step:0.05,
     }
 },
-created(){
-    if(!this.$store.getters.user){
+async created(){
+    let user = this.$store.getters.user;
+    if(!user) {
+        user = await this.$store.dispatch({type:'getLoginUser'})
+    }
+    console.log('wtf: ', user);
+    if(!user){
         this.$notify.error({
                   title: 'Error',
                   message: 'User must been login'
@@ -112,8 +123,10 @@ created(){
         });
     }else{
         this.recipeToEdit = this.emptyRecipe();
-        this.recipeToEdit.memberId = this.$store.getters.user._id;
+        this.recipeToEdit.memberId = user._id;
+        console.log('new recipe before if');
         if(!this.recipeToEdit.memberId){
+            console.log('new recipe inside if');
             this.$notify.error({
                   title: 'Error',
                   message: 'User must been login'
@@ -124,6 +137,13 @@ created(){
     }
     },
     methods: {
+        removeIngredient(idx){
+            this.recipeToEdit.ingredients.splice(idx,1);
+        },
+        removeInstruction(idx){
+            this.recipeToEdit.instructions.splice(idx,1);
+
+        },
         emptyRecipe(){
            
          return ({
@@ -178,7 +198,7 @@ created(){
                         console.log('recipeSaveADD6', recipe);
                         this.$notify({
                             title: 'Save successfly',
-                            message: 'Your recipe been update :)',
+                            message: 'Your recipe has been updated :)',
                             type: 'success'
                         });
                         this.$router.push('/');

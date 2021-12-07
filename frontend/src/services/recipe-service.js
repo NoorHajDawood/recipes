@@ -17,10 +17,10 @@ export const recipesService = {
 }
 
 // TODO: support paging and filtering and sorting
-function query() {
+function query(filter) {
     // filterBy
     // return storageService.query(Recipe_KEY)
-    return axios.get(Recipe_URL + 'api/recipes').then(res => res.data)
+    return axios.get(Recipe_URL + `api/recipes?title=${filter.title??''}&sort=${filter.sort}`).then(res => res.data)
 }
 
 function getById(id) {
@@ -39,14 +39,10 @@ function remove(id) {
 async function save(recipe) {
     // const savedrecipe = (recipe._id) ? storageService.put(Recipe_KEY, recipe) : storageService.post(Recipe_KEY, recipe)
     const url = '/api/recipes';
-    console.log('save(recipe): ');
     if (recipe._id) {
-        console.log(`updating recipe ${recipe._id}`);
         return await axios.patch(url + `/${recipe._id}`, recipe).data;
     } else {
-        console.log('adding new recipe', recipe);
         const addResult = await axios.post(url, recipe);
-        console.log('addReulst:', addResult.data);
         return addResult.data;
     }
 }

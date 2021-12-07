@@ -1,0 +1,21 @@
+.el-button--primary {
+    color: $clr2;
+    background-color: $clrC;
+    border: none;
+}
+
+.flexFilter {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.margin-right {
+    margin-inline-start: 10px;
+}
+
+.el-button--primary:focus,
+.el-button--primary:hover {
+    background-color: $clrC;
+    border: none;
+    color: $clr2;
+}

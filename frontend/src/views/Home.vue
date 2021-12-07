@@ -1,5 +1,6 @@
 <template>
   <div >
+        <filter-search @setFilter="setFilter"/>
         <list-recipes :recipes="recipes" :loggedUser="loggedUser" @removeFavorite="removeFavorite" @addFavorite="addFavorite"/>
   </div>
 </template>
@@ -7,6 +8,7 @@
 <script>
 // @ is an alias to /src
 import listRecipes from "@/components/recipes-list.vue"
+import filterSearch from '../components/filter-sort.vue'
 export default {
   name: "Home",
   data(){
@@ -18,11 +20,16 @@ export default {
     this.loadUser;
   },
   components: {
-    listRecipes
+    listRecipes,
+    filterSearch
   },
   methods:{
+    setFilter(filter){
+      this.$store.dispatch({type:'loadRecipes', filter});
+    },
     mounted() {
-      this.$store.dispatch({type:'loadRecipes'})
+      const filter ={'title':'', 'sort':'likes'};
+      this.$store.dispatch({type:'loadRecipes',filter});
       window.homeComponent = this
     },
     beforeDestroy() {
@@ -49,10 +56,16 @@ export default {
     recipes(){
       return this.$store.getters.recipesForDisplay;
     },
-    loadUser(){
-      const user = this.$store.getters.user;
+    async loadUser(){
+      let user = this.$store.getters.user;
+      if(!user) {
+        console.log('refresh Home page - noy');
+        user = await this.$store.dispatch({type:'getLoginUser'});
+        console.log('after dispach -o ');
+      }
       if(user){
-        this.loggedUser = JSON.parse(JSON.stringify(user));
+          this.loggedUser = JSON.parse(JSON.stringify(user));
+          this.$store.commit({ type: "setUser", savedUser: this.loggedUser });
       }
       return this.loggedUser
     },

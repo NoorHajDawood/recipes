@@ -29,7 +29,6 @@ export default {
       clickHeart(){
         if(this.loggedUser){
           if(!this.isFavorite){
-            
             this.$emit('addFavorite', this.recipePrev);
           }
           else{
@@ -38,6 +37,10 @@ export default {
           this.isFavorite = !this.isFavorite;   
         }
         else{
+           this.$notify.error({
+                    title: 'Error',
+                    message: 'User must be loggedin first'
+                });
           //  popup sign up
         }
       }
@@ -48,13 +51,3 @@ export default {
 <style>
 
 </style>
-
-
-    // const user = this.$store.getters.user;
-    //   if(loggedUser){
-    //     this.loggedUser = JSON.parse(JSON.stringify(user));
-    //     this.copyRecipe = JSON.parse(JSON.stringify(this.recipePrev));
-    //     this.isFavorite = this.loggedUser.favorites.some(recipe=>{
-    //     return recipe._id ===this.copyRecipe._id;
-    //   });
-    //   }
