@@ -107,7 +107,6 @@ async created(){
     if(!user) {
         user = await this.$store.dispatch({type:'getLoginUser'})
     }
-    console.log('wtf: ', user);
     if(!user){
         this.$notify.error({
                   title: 'Error',
@@ -124,9 +123,7 @@ async created(){
     }else{
         this.recipeToEdit = this.emptyRecipe();
         this.recipeToEdit.memberId = user._id;
-        console.log('new recipe before if');
         if(!this.recipeToEdit.memberId){
-            console.log('new recipe inside if');
             this.$notify.error({
                   title: 'Error',
                   message: 'User must been login'
@@ -192,10 +189,8 @@ async created(){
                     })
             }
             else{
-                console.log('recipeAdd1', this.recipeToEdit);
                 this.$store.dispatch({type:"updateRecipe", recipe:this.recipeToEdit})
                     .then(recipe =>{
-                        console.log('recipeSaveADD6', recipe);
                         this.$notify({
                             title: 'Save successfly',
                             message: 'Your recipe has been updated :)',

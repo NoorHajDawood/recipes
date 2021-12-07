@@ -40,12 +40,6 @@ export default {
     computed:{
        loginUser(){
          let user = this.$store.getters.user;
-          //if(!user) {
-          //  console.log('refresh Home page - noy');
-          //  user = await this.$store.dispatch({type:'getLoginUser'});
-          //  console.log('after dispach -o ');
-          //}
-          console.log('loguser',user);
           return user ? true : false; 
         },
     }

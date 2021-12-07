@@ -58,7 +58,6 @@ exports.recipesController = {
         try {
             docs = await newRecipe.save();
         } catch (err) {
-            console.log(` ${err}`);
             res.status(400).json({ error: ` ${err}` });
             return;
         }

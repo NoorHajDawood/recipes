@@ -89,13 +89,9 @@ export default {
         },
         async getLoggedUser(){
             try{
-                // const user = await this.$store.getters.user;
-                // this.loginUser = JSON.parse(JSON.stringify(user));
                 let user = this.$store.getters.user;
                 if(!user) {
-                    console.log('refresh Home page - noy');
                     user = await this.$store.dispatch({type:'getLoginUser'})
-                    console.log('after dispach -o ');
                 }
                 if(user){
                     this.loginUser = JSON.parse(JSON.stringify(user));

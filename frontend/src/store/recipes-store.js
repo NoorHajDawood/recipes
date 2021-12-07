@@ -22,17 +22,6 @@ export const recipesStore = ({
         getRecipe(state, { recipe }) {
             state.currRecipe = recipe;
         },
-        // addRecipe(state, { recipe }) {
-        //     state.recipes.unshift(recipe);
-        // },
-        // updateRecipe(state, { recipe }) {
-        //     const idx = state.recipes.findIndex(saveRecipe => recipe._id == saveRecipe._id);
-        //     state.recipes.splice(idx, 1, recipe);
-        // },
-        // removeRecipe(state, { recipeId }) {
-        //     const idx = state.recipes.findIndex(recipe => recipe._id == recipeId);
-        //     state.recipes.splice(idx, 1);
-        // }
 
     },
     actions: {
@@ -56,12 +45,9 @@ export const recipesStore = ({
                 })
         },
         addRecipe({ dispatch }, { recipe }) {
-            console.log(`Store addRecipe: `, recipe);
             return recipesService.save(recipe).then(savedRecipe => {
-                console.log('recive recipe 555 - before dispatch', savedRecipe);
                 const filter = { 'title': '', 'sort': 'likes' };
                 dispatch({ type: "loadRecipes", filter });
-                console.log('recipeAdd5 - after dispatch', savedRecipe);
                 return savedRecipe;
             }).catch((err) => {
                 throw err;

@@ -27,7 +27,6 @@ export const userStore = {
                 commit({ type: "setUser", savedUser: user });
                 return user;
             } catch (err) {
-                console.log('cannot save user chages');
                 throw err;
             }
         },
@@ -36,7 +35,6 @@ export const userStore = {
                 const savedUser = await userService.login(user);
                 commit({ type: "setUser", savedUser });
             } catch (err) {
-                console.log("error login");
                 throw err;
             }
 
@@ -46,7 +44,6 @@ export const userStore = {
                 await userService.logout();
                 commit({ type: 'setUser', savedUser: null });
             } catch (err) {
-                console.log(err);
                 throw err;
 
             }
