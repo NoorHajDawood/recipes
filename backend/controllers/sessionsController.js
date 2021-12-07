@@ -2,6 +2,10 @@ const User = require('../models/user');
 
 exports.sessionsController = {
     async login(req, res) {
+        if(req.session && req.session.userId) {
+            res.redirect(`/api/users/${req.session.userId}`);
+            return;
+        }
         let user;
         const { email, password } = req.body;
         if (!email || !password) {
