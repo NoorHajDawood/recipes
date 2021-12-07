@@ -13,8 +13,7 @@ exports.sessionsController = {
             return;
         }
         try {
-            email = new RegExp(email, 'i');
-            user = await User.findOne({ email: email });
+            user = await User.findOne({ email: new RegExp(email, 'i') });
         } catch (err) {
             res.status(500).json({ error: `Error get User: ${email} : ${err}` });
             return;
