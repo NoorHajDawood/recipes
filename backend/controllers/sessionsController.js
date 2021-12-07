@@ -13,6 +13,7 @@ exports.sessionsController = {
             return;
         }
         try {
+            email = email.toLowerCase();
             user = await User.findOne({ email: email }).collation( { locale: 'en_US' } );
         } catch (err) {
             res.status(500).json({ error: `Error get User: ${email} : ${err}` });
