@@ -1,6 +1,6 @@
 #### Recipes
 
-Recipes is a project for 'Methods in software engineering' course.
+Recipes is a project for 'Introduction to Methods in Software Engineering ' course.
 https://recipes-methods.herokuapp.com/
 
 
